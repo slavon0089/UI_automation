@@ -6,6 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -22,12 +24,17 @@ public class YandexLoginTest {
     }
     @BeforeEach
     void initBrowser() {
-        driver = new ChromeDriver();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");     //убрать UI
+        driver = new EventFiringWebDriver(new ChromeDriver(options)) ;
+
+       // driver = new ChromeDriver();
         webDriverWait = new WebDriverWait(driver, 5);
     }
 
     @Test
-    void  LoginTest ()  {
+    void loginTest()  {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get("https://passport.yandex.by/auth");
 
@@ -42,7 +49,7 @@ public class YandexLoginTest {
     }
 
     @Test
-    void IncorrectLoginTest (){
+    void incorrectLoginTest(){
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get("https://passport.yandex.by/auth");
 
@@ -54,7 +61,7 @@ public class YandexLoginTest {
     }
 
     @Test
-    void IncorrectPasswordTest ()  {
+    void incorrectPasswordTest()  {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get("https://passport.yandex.by/auth");
 
@@ -69,7 +76,7 @@ public class YandexLoginTest {
     }
 
     @Test
-    void AddContactToContactList () throws InterruptedException {
+    void addContactToContactList() throws InterruptedException {
 
             WebDriverManager.chromedriver().setup();
             WebDriver driver = new ChromeDriver();
